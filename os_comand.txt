@@ -1,0 +1,39 @@
+import os
+
+# Creating a file and writing to it
+with open("/sd/example.txt", "w") as file:
+    file.write("Hello, SD Card!")
+
+# Creating a new directory
+os.mkdir("/sd/my_folder")
+
+# Changing the current directory to the new folder
+os.chdir("/sd/my_folder")
+
+# Checking the current working directory
+print("Current Directory:", os.getcwd())
+
+# Creating a file in the new directory
+with open("file_in_folder.txt", "w") as file:
+    file.write("This file is inside 'my_folder'.")
+
+# Going back to the root directory of the SD card
+os.chdir("/sd")
+
+# Listing files and directories in the root directory
+print("Contents of /sd:", os.listdir("/sd"))
+
+# Renaming a file
+os.rename("/sd/example.txt", "/sd/renamed_example.txt")
+
+# Removing a file
+os.remove("/sd/renamed_example.txt")
+
+# Removing a file inside the directory
+os.remove("/sd/my_folder/file_in_folder.txt")
+
+# Removing an empty directory
+os.rmdir("/sd/my_folder")
+
+# Final directory listing to confirm removal
+print("Final contents of /sd:", os.listdir("/sd"))
