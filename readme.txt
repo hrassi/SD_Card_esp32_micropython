@@ -18,7 +18,8 @@ This experiment uses an 64GB micro-SD card and it must be formatted
 Step 5: Python Program – SD Card Interface Module
 
  Python Program – SD Card Interface Module
-Open the ESP32 as drive, and then copy the library into root directory.
+Open the ESP32 as drive, and then copy the library sdcard.py 
+into root directory.
 
  
 
@@ -57,17 +58,9 @@ During startup, the SPI bus and SD card is initialized.
 
 Initially a “sample.txt” file is created / opened with FILE_WRITE option.
 
-If file open is success, then the program writes running numbers (0 to19), into “sample.txt”, and then closes.
 
-The program once again opens the “sample.txt” with FILE_APPEND option, and appends a text at the end.
-
-Then the program once again opens the “sample.txt” with FILE_READ option, reads the “sample.txt” and send data to the debug port, which prints text on connected debug terminal.
-
-
-
-'''
  # Demonstrates ESP32 interface to MicroSD Card Adapter
- # Create a text file and write running numbers.
+ # Create a text file 
  # Open text file, read and print the content on debug port
    
  * The ESP32 pin connections for MicroSD Card Adapter SPI
@@ -82,95 +75,15 @@ Then the program once again opens the “sample.txt” with FILE_READ option, re
  * MicroSD SCK pin to ESP32 GPIO18
  * MicroSD CS pin to ESP32 GPIO5
  
- Name:- M.Pugazhendi
- Date:-  20thOct2021
- Version:- V0.1
- e-mail:- muthuswamy.pugazhendi@gmail.com
-'''
-import machine
-from machine import Pin, SPI, SoftSPI
-import sdcard
-import os
- 
-toggle = 0
- 
-#Initialize the onboard LED as output
-led = machine.Pin(2,machine.Pin.OUT)
 
-# Toggle LED functionality
-def BlinkLED(timer_one):
-    global toggle
-    if toggle == 1:
-        led.value(0)
-        toggle = 0
-    else:
-        led.value(1)
-        toggle = 1
+ Conclusion:
 
-# Initialize the SD card
-spi=SoftSPI(1,sck=Pin(18),mosi=Pin(23),miso=Pin(19))
-sd=sdcard.SDCard(spi,Pin(5))
+The experiment is successfully executed with ESP32, SD Card Module, and 64 GB micro-SD card
 
-# Create a instance of MicroPython Unix-like Virtual File System (VFS),
-vfs=os.VfsFat(sd)
- 
-# Mount the SD card
-os.mount(sd,'/sd')
+A “sample.txt” file is created, written  and then readback / printed the text via debug port.
 
-# Debug print SD card directory and files
-print(os.listdir('/sd'))
 
-# Create / Open a file in write mode.
-# Write mode creates a new file.
-# If  already file exists. Then, it overwrites the file.
-file = open("/sd/sample.txt","w")
 
-# Write sample text
-for i in range(20):
-    file.write("Sample text = %s\r\n" % i)
-    
-# Close the file
-file.close()
-
-# Again, open the file in "append mode" for appending a line
-file = open("/sd/sample.txt","a")
-file.write("Appended Sample Text at the END \n")
-file.close()
-
-# Open the file in "read mode". 
-# Read the file and print the text on debug port.
-file = open("/sd/sample.txt", "r")
-if file != 0:
-    print("Reading from SD card")
-    read_data = file.read()
-    print (read_data)
-file.close()
-
-# Initialize timer_one. Used for toggling the on board LED
-timer_one = machine.Timer(0)
-
-# Timer one initialization for on board blinking LED at 200mS interval
-timer_one.init(freq=5, mode=machine.Timer.PERIODIC, callback=BlinkLED)
-Attachments
-download {{ file.name }}sdcard.pyDownload
-Step 6: Conclusion
-
- Conclusion
- Conclusion
-The experiment is successfully executed with ESP32, SD Card Module, and 8GB micro-SD card
-
-A “sample.txt” file is created, written with running numbers and then readback / printed the text via debug port.
-
-Step 7: Results Video and Links
-
- Results Video and Links
-Please Visit You Tube for the Videos:,
-
-Visit the "VESZLE - The Art Of Electronics" you tube channel for further information and videos. https://www.youtube.com/channel/UCY4mekPLfeFinbQH...
-
-ESP32 -- Micro SD Card Implementation video
-
-https://youtu.be/08MXeM0Qb8Y
 
 
 
